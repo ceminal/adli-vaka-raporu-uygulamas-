@@ -1,8 +1,9 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, FieldInputProps, Form, Formik, FormikProps, FormikValues } from 'formik';
 import * as Yup from 'yup';
-import { Cascader, Button, Space, Input } from 'antd';
+import { Cascader, Button, Space, Input, Select } from 'antd';
 import './HastaBilgileriFormu.scss';
 import { useState } from 'react';
+const { Option } = Select;
 
 const bloodGroupOptions = [
     {
@@ -34,6 +35,20 @@ const bloodGroupOptions = [
         ],
     },
     {
+        value: 'AB',
+        label: 'AB',
+        children: [
+            {
+                value: '+',
+                label: '+',
+            },
+            {
+                value: '-',
+                label: '-',
+            },
+        ],
+    },
+    {
         value: '0',
         label: '0',
         children: [
@@ -50,7 +65,7 @@ const bloodGroupOptions = [
 ];
 
 const validationSchema = Yup.object({
-    ad: Yup.string().required('Ad alanı zorunludur').min(3, 'Ad 3 karakterden uzun olmalı'),
+    ad: Yup.string().required('Ad alanı zorunludur').min(3, 'Ad en az 3 karakter veya daha uzun olmalı'),
     soyad: Yup.string().required('Soyad alanı zorunludur').max(20, 'Soyad en fazla 20 karakter uzunluğunda olmalı'),
     yas: Yup.number().required('Yaş alanı zorunludur').positive().integer(),
     cinsiyet: Yup.string().required('Cinsiyet alanı zorunludur'),
@@ -58,11 +73,14 @@ const validationSchema = Yup.object({
     kanGrubuRh: Yup.string().required('Rh alanı zorunludur'),
 });
 
+
+
 const HastaBilgileriFormu = () => {
     const [displayValue, setDisplayValue] = useState<string>('');
+
     return (
         <div className="formContainer">
-            <h4>Hasta Bilgileri</h4>
+            <h5 className='patientInfoTitle' >Hasta Bilgileri</h5>
             <Formik
                 initialValues={{
                     ad: '',
@@ -95,14 +113,31 @@ const HastaBilgileriFormu = () => {
                             <Field name="yas" as={Input} type="number" />
                             <ErrorMessage name="yas" component="div" className="error-message" />
 
+
                             <label htmlFor="cinsiyet">Cinsiyet</label>
-                            <Field name="cinsiyet" as={Input} />
+                            <Field name="cinsiyet">
+                                {({ field, form }: { field: FieldInputProps<string>, form: FormikProps<FormikValues> }) => (
+                                    <Select
+                                        {...field}
+                                        showSearch
+                                        placeholder="Cinsiyet Seçiniz"
+                                        optionFilterProp="children"
+                                        onChange={(value) => form.setFieldValue(field.name, value)}
+                                        onBlur={() => form.setFieldTouched(field.name, true)}
+                                    >
+                                        <Option value="">Cinsiyet Seçiniz</Option>
+                                        <Option value="Kadın">Kadın</Option>
+                                        <Option value="Erkek">Erkek</Option>
+                                    </Select>
+                                )}
+                            </Field>
                             <ErrorMessage name="cinsiyet" component="div" className="error-message" />
 
                             <label htmlFor="kanGrubuRh">Kan Grubu ve Rh</label>
                             <Field
                                 name="kanGrubuRh"
                                 as={Cascader}
+                                placeholder="Kan Grubu"
                                 options={bloodGroupOptions}
                                 displayRender={(labels: string[]) => labels.join(' ')}
                                 onChange={(values: string[]) => {

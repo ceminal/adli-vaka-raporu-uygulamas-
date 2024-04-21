@@ -1,13 +1,18 @@
 .formContainer{
     width:300px;
-    margin-bottom:20px;
-    
+    margin-bottom:50px;
+    margin-right:100px;
+
     .ant-space {
         width:100%;
     }
 
     .error-message {
         color:Red;
+    }
+
+    .patientInfoTitle{
+        margin-bottom:20px;
     }
 }
 
