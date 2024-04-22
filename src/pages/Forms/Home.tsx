@@ -1,5 +1,4 @@
-import GenelBilgiler from "./GenelBilgiler"
-import HastaBilgileriFormu from "./HastaBilgileriFormu"
+import HastaBilgileriFormu from "./HastaBilgileriFormu";
 import './Home.scss';
 
 const Home = () => {
@@ -7,8 +6,7 @@ const Home = () => {
     <div className="homeContainer">
       <h2 className="homePageTitle">Adli Vaka Raporu</h2>
       <div className="homePageFormContainer">
-          <HastaBilgileriFormu />
-          <GenelBilgiler />       
+        <HastaBilgileriFormu />
       </div>
     </div>
   )
