@@ -83,12 +83,12 @@ const validationSchema = Yup.object({
     doktorAdi: Yup.string().required('Doktor Adı zorunlu'),
     organizasyon: Yup.string().required('Organizasyon zorunlu'),
     uygunOrtamSaglandi: Yup.boolean().oneOf([true], 'Uygun Ortam Sağlandı zorunlu').required(),
-    darpDurumu: Yup.string().required('Lütfen darp durumu seçiniz.'),
+    darpDurumu: Yup.string().required('Darp durumu seçiniz.'),
 });
 
 const HastaBilgileriFormu = () => {
     const [displayValue, setDisplayValue] = useState<string>('');
-    const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+    const [showAdditionalFields, setShowAdditionalFields] = useState<boolean>(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -117,7 +117,6 @@ const HastaBilgileriFormu = () => {
                 onSubmit={(values, { setSubmitting }) => {
                     dispatch(setFormValues(values));
                     setSubmitting(false);
-                    console.log(values);
                     navigate('/form-results');
                     
                 }}
@@ -166,7 +165,6 @@ const HastaBilgileriFormu = () => {
                                 options={bloodGroupOptions}
                                 displayRender={(labels: string[]) => labels.join(' ')}
                                 onChange={(values: string[]) => {
-                                    console.log('Seçilen kan grubu ve Rh:', values);
                                     const displayValue = values.join(' ');
                                     setFieldValue('kanGrubu', values[0]);
                                     setFieldValue('kanGrubuRh', values[1]);
@@ -187,7 +185,7 @@ const HastaBilgileriFormu = () => {
                                 </Space>
                                 <ErrorMessage name="darpDurumu" component="div" className="error-message" />
 
-                                <Button type="primary" htmlType="submit" onClick={() => setShowAdditionalFields(true)} >
+                                <Button type="primary" htmlType="submit" onClick={() => setShowAdditionalFields(true)}>
                                     Devam
                                 </Button>
                                 {showAdditionalFields && (
@@ -204,13 +202,13 @@ const HastaBilgileriFormu = () => {
                                                     onBlur={() => form.setFieldTouched(field.name, true)}
                                                 >
                                                     <Option value="">Geliş Nedeni Seçiniz</Option>
-                                                    <Option value="etkiliEylem">Etkili Eylem</Option>
-                                                    <Option value="trafikKazasi">Trafik Kazası</Option>
-                                                    <Option value="isKazasi">İş Kazası</Option>
-                                                    <Option value="digerKazalar">Diğer Kazalar</Option>
-                                                    <Option value="insanHaklari">İnsan Hakları İhlali İddiası</Option>
-                                                    <Option value="intihar">İntihar Girişimi</Option>
-                                                    <Option value="zehirlenme">Zehirlenmeler</Option>
+                                                    <Option value="Etkili Eylem">Etkili Eylem</Option>
+                                                    <Option value="Trafik Kazası">Trafik Kazası</Option>
+                                                    <Option value="İş Kazası">İş Kazası</Option>
+                                                    <Option value="Diğer Kazalar">Diğer Kazalar</Option>
+                                                    <Option value="İnsan Hakları İhlali İddiası">İnsan Hakları İhlali İddiası</Option>
+                                                    <Option value="İntihar Girişimi">İntihar Girişimi</Option>
+                                                    <Option value="Zehirlenmeler">Zehirlenmeler</Option>
                                                 </Select>
                                             )}
                                         </Field>
@@ -237,11 +235,11 @@ const HastaBilgileriFormu = () => {
                                                     onChange={(value) => form.setFieldValue(field.name, value)}
                                                     onBlur={() => form.setFieldTouched(field.name, true)}
                                                 >
-                                                    <Option value="doktor">Tabip</Option>
-                                                    <Option value="saglikci">Sağlık Personeli</Option>
-                                                    <Option value="other">Sağlık Meslek Mensubu Personel</Option>
-                                                    <Option value="refakatci">Refakatçi</Option>
-                                                    <Option value="guvenlik">Güvenlik Görevlisi</Option>
+                                                    <Option value="Tabip">Tabip</Option>
+                                                    <Option value="Sağlık Personeli">Sağlık Personeli</Option>
+                                                    <Option value="Sağlık Meslek Mensubu Personel">Sağlık Meslek Mensubu Personel</Option>
+                                                    <Option value="Refakatçi">Refakatçi</Option>
+                                                    <Option value="Güvenlik Görevlisi">Güvenlik Görevlisi</Option>
                                                 </Select>
                                             )}
                                         </Field>
