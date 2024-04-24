@@ -1,8 +1,8 @@
 import './App.css'
-import Home from './pages/Forms/Home'
+// import Home from './pages/Forms/Home'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import FormResults from './pages/Results/FormResults';
-import HastaBilgileriFormu from './pages/Forms/HastaBilgileriFormu';
+import FormInputs from './pages/Forms/FormInputs';
 
 function App() {
 
@@ -11,12 +11,12 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
+          <Route path="/" element={<FormResults />} />
+          {/* <Route
             path="/form-results"
             element={<FormResults />}
-          />
-          <Route path="hasta-bilgileri-formu" element={<HastaBilgileriFormu />} />
+          /> */}
+          <Route path="form-inputs" element={<FormInputs />} />
         </Routes>
       </Router>
 
