@@ -3,16 +3,17 @@ import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import formReducer from './slices/formSlice';
-
+import tableDataReducer from './slices/tableDataSlice'
 
 const rootReducer = combineReducers({
   form: formReducer,
+  table: tableDataReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['form']
+  whitelist: ['table']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -24,7 +25,7 @@ const customizedMiddleware = (getDefaultMiddleware) =>
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: customizedMiddleware 
+  middleware: customizedMiddleware
 });
 
 

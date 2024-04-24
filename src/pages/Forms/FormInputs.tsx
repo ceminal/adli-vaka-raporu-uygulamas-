@@ -4,12 +4,13 @@ import { Cascader, Space, Input, Select, Switch, Button, Radio } from 'antd';
 import './FormInputs.scss';
 import { useState } from 'react';
 import TextArea from 'antd/es/input/TextArea';
-import { useDispatch } from 'react-redux';
-import { setFormValues } from '../../redux/slices/formSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTableData } from '../../redux/slices/tableDataSlice';
 import { useNavigate } from 'react-router-dom';
 import { IFormData } from '../../interfaces/formData';
 
 const { Option } = Select;
+
 
 const bloodGroupOptions = [
     {
@@ -88,6 +89,9 @@ const validationSchema = Yup.object({
 });
 
 const FormInputs: React.FC = () => {
+    const tableData = useSelector((state: RootState) => state.table.tableData)
+    console.log(tableData);
+    
     const [displayValue, setDisplayValue] = useState<string>('');
     const [showAdditionalFields, setShowAdditionalFields] = useState<boolean>(false);
     const dispatch = useDispatch();
@@ -117,9 +121,8 @@ const FormInputs: React.FC = () => {
                 onSubmit={(values, { setSubmitting }) => {
                     const randomId = "id_" + Math.random().toString(36).substring(2, 9);
                     const updatedValues = { ...values, id: randomId };
-                    dispatch(setFormValues(updatedValues));
-                    setSubmitting(false);
-                    console.log(updatedValues);     
+                    dispatch(setTableData([...tableData, updatedValues]));
+                    setSubmitting(false);    
                     navigate("/");
                 }}
             >

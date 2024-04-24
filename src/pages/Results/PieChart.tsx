@@ -1,44 +1,27 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-
-interface TableData {
+interface PieChartData {
   organizasyon: string;
+  count: number;
 }
 
-const PieChart: React.FC<{ data: TableData[] }> = ({ data }) => {
-  const calculateOrganizationCounts = () => {
-    const organizationCounts: { [key: string]: number } = {};
-
-
-    data.forEach((record) => {
-      const organizationName = record.organizasyon;
-      if (!organizationCounts[organizationName]) {
-        organizationCounts[organizationName] = 1;
-      } else {
-        organizationCounts[organizationName]++;
-      }
-    });
-
-    return organizationCounts;
-  };
-
-  const organizationCounts = calculateOrganizationCounts();
-
+const PieChart: React.FC<{ data: PieChartData[] }> = ({ data }) => {
   const chartOptions = {
-    labels: Object.keys(organizationCounts),
-    options: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        text: 'Organizasyon Adına Göre Adli Rapor Sayısı',
-        align: 'center',
-      },
+    chart: {
+      id: "pie-chart"
     },
+    labels: data.map(item => item.organizasyon),
+    title: {
+      text: 'Organizasyon Adına Göre Adli Rapor Sayısı',
+      align: 'center'
+    },
+    legend: {
+      position: 'bottom'
+    }
   };
 
-  const chartSeries = Object.values(organizationCounts);
+  const chartSeries = data.map(item => item.count);
 
   return (
     <div>
