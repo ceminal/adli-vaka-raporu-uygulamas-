@@ -2,15 +2,15 @@ import React from 'react';
 import { Button, Table } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux-toolkit/store';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PieChart from './PieChart';
+import { useState } from 'react';
+
 
 const FormResults: React.FC = () => {
-    const formValues = useSelector((state: RootState) => state.form.formValues);
-    const [tableData, setTableData] = useState<any[]>([]);
+    const form = useSelector((state: RootState) => state.form.formValues);
     const navigate = useNavigate();
-
+    console.log(form);
+    const [data, setData] = useState<any[]>(form ? [form] : [])
 
     const columns = [
         {
@@ -110,44 +110,16 @@ const FormResults: React.FC = () => {
             title: '',
             key: 'action',
             fixed: 'left',
-            render: (_text: string, record: any) => (
-                <Button type="link" style={{ backgroundColor: 'red', color: 'white' }} danger onClick={() => handleDelete(record.key)}>Sil</Button>
-            ),
         },
     ];
-
+   
     const handleClick = () => {
         navigate('/hasta-bilgileri-formu');
     }
 
     const handleClearTable = () => {
-        setTableData([]);
+        setData([]);
     };
-
-    const handleDelete = (key: string) => {
-        setTableData(prevData => prevData.filter(item => item.key !== key));
-    }
-
-    useEffect(() => {
-        const newFormData = {
-            key: Date.now().toString(),
-            ad: formValues.ad,
-            soyad: formValues.soyad,
-            yas: formValues.yas,
-            cinsiyet: formValues.cinsiyet,
-            kanGrubu: formValues.kanGrubu,
-            kanGrubuRh: formValues.kanGrubuRh,
-            gelisNedeni: formValues.gelisNedeni,
-            gelisNedeniAciklama: formValues.gelisNedeniAciklama,
-            odadaBulunanlar: formValues.odadaBulunanlar.join(', '),
-            darpDurumu: formValues.darpDurumu,
-            organizasyon: formValues.organizasyon,
-            sikayet: formValues.sikayet,
-            doktorAdi: formValues.doktorAdi,
-            uygunOrtamSaglandi: formValues.uygunOrtamSaglandi.toString(),
-        };
-        setTableData(prevData => [...prevData, newFormData]);
-    }, [formValues]);
 
     return (
         <div>
@@ -155,16 +127,16 @@ const FormResults: React.FC = () => {
                 <h2>Form Sonuçları</h2>
                 <Table
                     columns={columns}
-                    dataSource={tableData}
+                    dataSource={data}
                     pagination={false}
+                    rowKey={(record) => record.id}               
                 />
                 <Button type="primary" onClick={handleClick}>Yeni Kayıt Ekle</Button>
                 <Button type="primary" onClick={handleClearTable} danger>Tabloyu Temizle</Button>
             </div>
-
-            <PieChart data={tableData} />
         </div>
     );
-}
 
+}
 export default FormResults;
+

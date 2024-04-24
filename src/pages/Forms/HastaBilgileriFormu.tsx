@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { setFormValues } from '../../redux-toolkit/slices/formSlice';
 import { useNavigate } from 'react-router-dom';
 
+
 const { Option } = Select;
 
 const bloodGroupOptions = [
@@ -86,7 +87,7 @@ const validationSchema = Yup.object({
     darpDurumu: Yup.string().required('Darp durumu seçiniz.'),
 });
 
-const HastaBilgileriFormu = () => {
+const HastaBilgileriFormu: React.FC = () => {
     const [displayValue, setDisplayValue] = useState<string>('');
     const [showAdditionalFields, setShowAdditionalFields] = useState<boolean>(false);
     const dispatch = useDispatch();
@@ -96,30 +97,29 @@ const HastaBilgileriFormu = () => {
         <div className="formContainer">
             <Formik
                 initialValues={{
-                  
-                        ad: '',
-                        soyad: '',
-                        yas: '',
-                        cinsiyet: '',
-                        kanGrubu: [],
-                        kanGrubuRh: [],
-                        gelisNedeni: '',
-                        gelisNedeniAciklama: '',
-                        odadaBulunanlar: [],
-                        darpDurumu: false,
-                        organizasyon: '',
-                        sikayet: '',
-                        doktorAdi: '',
-                        uygunOrtamSaglandi: false,
-                 
+                    ad: '',
+                    soyad: '',
+                    yas: 0,
+                    cinsiyet: '',
+                    kanGrubu: [],
+                    kanGrubuRh: [],
+                    gelisNedeni: '',
+                    gelisNedeniAciklama: '',
+                    odadaBulunanlar: [],
+                    darpDurumu: false,
+                    organizasyon: '',
+                    sikayet: '',
+                    doktorAdi: '',
+                    uygunOrtamSaglandi: false,
+
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
                     dispatch(setFormValues(values));
                     setSubmitting(false);
                     navigate('/form-results');
-                    
                 }}
+                
             >
                 {({ handleSubmit, setFieldValue }) => (
                     <Form onSubmit={handleSubmit}>
@@ -175,103 +175,101 @@ const HastaBilgileriFormu = () => {
                             <ErrorMessage name="kanGrubu" component="div" className="error-message" />
                             <ErrorMessage name="kanGrubuRh" component="div" className="error-message" />
 
-                            {/* Geliş Nedeni Start */}
-                           
-                                <h5 className='infoTitle' >Genel Bilgiler</h5>
-                                <label htmlFor="darpDurumu">Darp Durumu</label>
-                                <Space>
-                                    <Field name="darpDurumu" type="radio" value="Evet" as={Radio}>Evet</Field>
-                                    <Field name="darpDurumu" type="radio" value="Hayır" as={Radio}>Hayır</Field>
-                                </Space>
-                                <ErrorMessage name="darpDurumu" component="div" className="error-message" />
+                            <h5 className='infoTitle' >Genel Bilgiler</h5>
+                            <label htmlFor="darpDurumu">Darp Durumu</label>
+                            <Space>
+                                <Field name="darpDurumu" type="radio" value="Evet" as={Radio}>Evet</Field>
+                                <Field name="darpDurumu" type="radio" value="Hayır" as={Radio}>Hayır</Field>
+                            </Space>
+                            <ErrorMessage name="darpDurumu" component="div" className="error-message" />
 
-                                <Button type="primary" htmlType="submit" onClick={() => setShowAdditionalFields(true)}>
-                                    Devam
-                                </Button>
-                                {showAdditionalFields && (
-                                    <div id="hiddenForm" style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }} >
-                                        <label htmlFor="gelisNedeni">Geliş Nedeni</label>
-                                        <Field name="gelisNedeni">
-                                            {({ field, form }: { field: FieldInputProps<string>, form: FormikProps<FormikValues> }) => (
-                                                <Select
-                                                    {...field}
-                                                    showSearch
-                                                    placeholder="Geliş Nedeni Seçiniz"
-                                                    optionFilterProp="children"
-                                                    onChange={(value) => form.setFieldValue(field.name, value)}
-                                                    onBlur={() => form.setFieldTouched(field.name, true)}
-                                                >
-                                                    <Option value="">Geliş Nedeni Seçiniz</Option>
-                                                    <Option value="Etkili Eylem">Etkili Eylem</Option>
-                                                    <Option value="Trafik Kazası">Trafik Kazası</Option>
-                                                    <Option value="İş Kazası">İş Kazası</Option>
-                                                    <Option value="Diğer Kazalar">Diğer Kazalar</Option>
-                                                    <Option value="İnsan Hakları İhlali İddiası">İnsan Hakları İhlali İddiası</Option>
-                                                    <Option value="İntihar Girişimi">İntihar Girişimi</Option>
-                                                    <Option value="Zehirlenmeler">Zehirlenmeler</Option>
-                                                </Select>
-                                            )}
-                                        </Field>
-                                        <ErrorMessage name="gelisNedeni" component="div" className="error-message" />
+                            <Button type="primary" htmlType="submit" onClick={() => setShowAdditionalFields(true)}>
+                                Devam
+                            </Button>
+                            {showAdditionalFields && (
+                                <div id="hiddenForm" style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }} >
+                                    <label htmlFor="gelisNedeni">Geliş Nedeni</label>
+                                    <Field name="gelisNedeni">
+                                        {({ field, form }: { field: FieldInputProps<string>, form: FormikProps<FormikValues> }) => (
+                                            <Select
+                                                {...field}
+                                                showSearch
+                                                placeholder="Geliş Nedeni Seçiniz"
+                                                optionFilterProp="children"
+                                                onChange={(value) => form.setFieldValue(field.name, value)}
+                                                onBlur={() => form.setFieldTouched(field.name, true)}
+                                            >
+                                                <Option value="">Geliş Nedeni Seçiniz</Option>
+                                                <Option value="Etkili Eylem">Etkili Eylem</Option>
+                                                <Option value="Trafik Kazası">Trafik Kazası</Option>
+                                                <Option value="İş Kazası">İş Kazası</Option>
+                                                <Option value="Diğer Kazalar">Diğer Kazalar</Option>
+                                                <Option value="İnsan Hakları İhlali İddiası">İnsan Hakları İhlali İddiası</Option>
+                                                <Option value="İntihar Girişimi">İntihar Girişimi</Option>
+                                                <Option value="Zehirlenmeler">Zehirlenmeler</Option>
+                                            </Select>
+                                        )}
+                                    </Field>
+                                    <ErrorMessage name="gelisNedeni" component="div" className="error-message" />
 
-                                        <label htmlFor="gelisNedeniAciklama">Geliş Nedeni Açıklama</label>
-                                        <Field name="gelisNedeniAciklama" as={TextArea} />
-                                        <ErrorMessage name="gelisNedeniAciklama" component="div" className="error-message" />
+                                    <label htmlFor="gelisNedeniAciklama">Geliş Nedeni Açıklama</label>
+                                    <Field name="gelisNedeniAciklama" as={TextArea} />
+                                    <ErrorMessage name="gelisNedeniAciklama" component="div" className="error-message" />
 
-                                        <label htmlFor="sikayet">Şikayet</label>
-                                        <Field name="sikayet" as={TextArea} />
-                                        <ErrorMessage name="sikayet" component="div" className="error-message" />
+                                    <label htmlFor="sikayet">Şikayet</label>
+                                    <Field name="sikayet" as={TextArea} />
+                                    <ErrorMessage name="sikayet" component="div" className="error-message" />
 
 
-                                        <label htmlFor="odadaBulunanlar">Odada Bulunanlar</label>
-                                        <Field name="odadaBulunanlar">
-                                            {({ field, form }: { field: FieldInputProps<string>, form: FormikProps<FormikValues> }) => (
-                                                <Select
-                                                    {...field}
-                                                    showSearch
-                                                    mode="multiple"
-                                                    placeholder="Odada Bulunanları Seçiniz"
-                                                    optionFilterProp="children"
-                                                    onChange={(value) => form.setFieldValue(field.name, value)}
-                                                    onBlur={() => form.setFieldTouched(field.name, true)}
-                                                >
-                                                    <Option value="Tabip">Tabip</Option>
-                                                    <Option value="Sağlık Personeli">Sağlık Personeli</Option>
-                                                    <Option value="Sağlık Meslek Mensubu Personel">Sağlık Meslek Mensubu Personel</Option>
-                                                    <Option value="Refakatçi">Refakatçi</Option>
-                                                    <Option value="Güvenlik Görevlisi">Güvenlik Görevlisi</Option>
-                                                </Select>
-                                            )}
-                                        </Field>
-                                        <ErrorMessage name="odadaBulunanlar" component="div" className="error-message" />
+                                    <label htmlFor="odadaBulunanlar">Odada Bulunanlar</label>
+                                    <Field name="odadaBulunanlar">
+                                        {({ field, form }: { field: FieldInputProps<string>, form: FormikProps<FormikValues> }) => (
+                                            <Select
+                                                {...field}
+                                                showSearch
+                                                mode="multiple"
+                                                placeholder="Odada Bulunanları Seçiniz"
+                                                optionFilterProp="children"
+                                                onChange={(value) => form.setFieldValue(field.name, value)}
+                                                onBlur={() => form.setFieldTouched(field.name, true)}
+                                            >
+                                                <Option value="Tabip">Tabip</Option>
+                                                <Option value="Sağlık Personeli">Sağlık Personeli</Option>
+                                                <Option value="Sağlık Meslek Mensubu Personel">Sağlık Meslek Mensubu Personel</Option>
+                                                <Option value="Refakatçi">Refakatçi</Option>
+                                                <Option value="Güvenlik Görevlisi">Güvenlik Görevlisi</Option>
+                                            </Select>
+                                        )}
+                                    </Field>
+                                    <ErrorMessage name="odadaBulunanlar" component="div" className="error-message" />
 
-                                        <label htmlFor="doktorAdi">Doktor Adı</label>
-                                        <Field name="doktorAdi" as={Input} />
-                                        <ErrorMessage name="doktorAdi" component="div" className="error-message" />
+                                    <label htmlFor="doktorAdi">Doktor Adı</label>
+                                    <Field name="doktorAdi" as={Input} />
+                                    <ErrorMessage name="doktorAdi" component="div" className="error-message" />
 
-                                        <label htmlFor="organizasyon">Organizasyon</label>
-                                        <Field name="organizasyon" as={Input} />
-                                        <ErrorMessage name="organizasyon" component="div" className="error-message" />
+                                    <label htmlFor="organizasyon">Organizasyon</label>
+                                    <Field name="organizasyon" as={Input} />
+                                    <ErrorMessage name="organizasyon" component="div" className="error-message" />
 
-                                        <label htmlFor="uygunOrtamSaglandi">Uygun Ortam Sağlandı</label>
-                                        <Field name="uygunOrtamSaglandi" type="checkbox">
-                                            {({ field, form }: { field: FieldInputProps<boolean>, form: FormikProps<FormikValues> }) => (
-                                                <Switch
-                                                    {...field}
-                                                    style={{ width: 50, marginBottom: 20 }}
-                                                    checked={field.value}
-                                                    onChange={(checked) => {
-                                                        form.setFieldValue("uygunOrtamSaglandi", checked);
-                                                    }}
-                                                />
-                                            )}
-                                        </Field>
-                                        <ErrorMessage name="uygunOrtamSaglandi" component="div" className="error-message" />
-                                    </div>
-                                )}
-                                <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-                                    Gönder
-                                </Button>                         
+                                    <label htmlFor="uygunOrtamSaglandi">Uygun Ortam Sağlandı</label>
+                                    <Field name="uygunOrtamSaglandi" type="checkbox">
+                                        {({ field, form }: { field: FieldInputProps<boolean>, form: FormikProps<FormikValues> }) => (
+                                            <Switch
+                                                {...field}
+                                                style={{ width: 50, marginBottom: 20 }}
+                                                checked={field.value}
+                                                onChange={(checked) => {
+                                                    form.setFieldValue("uygunOrtamSaglandi", checked);
+                                                }}
+                                            />
+                                        )}
+                                    </Field>
+                                    <ErrorMessage name="uygunOrtamSaglandi" component="div" className="error-message" />
+                                </div>
+                            )}
+                            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+                                Gönder
+                            </Button>
                         </Space>
                     </Form>
                 )}

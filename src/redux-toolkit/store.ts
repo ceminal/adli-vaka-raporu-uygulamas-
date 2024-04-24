@@ -1,22 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { formReducer } from './slices/formSlice';
-import { loadState, saveState } from "./localStorage";
+import { configureStore } from '@reduxjs/toolkit'
+import formReducer from '../redux-toolkit/slices/formSlice'
+// import { loadState, saveState } from "./localStorage";
 
-const preloadedState = loadState();
-
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    form: formReducer,
+    form: formReducer ,
   },
+})
 
-  preloadedState: {
-    form: preloadedState,
-  }
-});
 
-store.subscribe(() => {
-  saveState(store.getState().form);
-});
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
-export type RootState = ReturnType<typeof store.getState>;
 export default store;
+
