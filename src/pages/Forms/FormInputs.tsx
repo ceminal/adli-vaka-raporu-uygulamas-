@@ -73,8 +73,8 @@ const bloodGroupOptions = [
 ];
 
 const validationSchema = Yup.object({
-    ad: Yup.string().required('Ad alanı zorunludur').min(3, 'Ad en az 3 karakter veya daha uzun olmalı'),
-    soyad: Yup.string().required('Soyad alanı zorunludur').max(20, 'Soyad en fazla 20 karakter uzunluğunda olmalı'),
+    ad: Yup.string().required('Ad alanı zorunludur').min(3, 'Ad en az 3 karakter veya daha uzun olmalı').matches(/^[A-Za-z\s]*$/, 'Ad sadece harf içermelidir'),
+    soyad: Yup.string().required('Soyad alanı zorunludur').max(20, 'Soyad en fazla 20 karakter uzunluğunda olmalı').matches(/^[A-Za-z\s]*$/, 'Soyad sadece harf içermelidir'),
     yas: Yup.number().required('Yaş alanı zorunludur').positive('Yaş sıfırdan büyük bir sayı olmalıdır').integer('Yaş tam sayı olmalıdır').max(150, 'Yaş 150\'den büyük olamaz'),
     cinsiyet: Yup.string().required('Cinsiyet alanı zorunludur'),
     kanGrubu: Yup.string().required('Kan grubu alanı zorunludur'),
@@ -83,7 +83,7 @@ const validationSchema = Yup.object({
     sikayet: Yup.string().required('Şikayet alanı zorunludur').min(25, 'Minimum 25 karakter olmalıdır'),
     gelisNedeniAciklama: Yup.string().min(25, 'Minimum 25 karakter olmalıdır'),
     odadaBulunanlar: Yup.array().min(1, 'En az bir seçenek seçilmelidir'),
-    doktorAdi: Yup.string().required('Doktor Adı zorunludur').min(3, 'Ad en az 3 karakter veya daha uzun olmalı'),
+    doktorAdi: Yup.string().required('Doktor Adı zorunludur').min(3, 'Ad en az 3 karakter veya daha uzun olmalı').matches(/^[A-Za-z\s]*$/, 'Doktor Adı sadece harf içermelidir'),
     organizasyon: Yup.string().required('Organizasyon zorunludur'),
     darpDurumu: Yup.string().required('Darp durumu seçiniz.'),
 });
