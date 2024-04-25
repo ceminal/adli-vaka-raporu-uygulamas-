@@ -44,7 +44,7 @@ const FormResults: React.FC = () => {
                 { text: 'Erkek', value: 'Erkek' },
                 { text: 'Kadın', value: 'Kadın' }
             ],
-            // onFilter: (value: string, record: IFormData) => record.cinsiyet === value
+            onFilter: (value: unknown, record: IFormData) => record.cinsiyet === value
         },
         {
             title: 'Kan Grubu',
@@ -52,7 +52,7 @@ const FormResults: React.FC = () => {
             key: 'kanGrubu',
             render: (_text: string, record: IFormData) => `${record.kanGrubu || ''} ${record.kanGrubuRh || ''}`,
             filters: bloodTypeFilters,
-            // onFilter: (value: string, record: IFormData) => `${record.kanGrubu || ''} ${record.kanGrubuRh || ''}` === value
+            onFilter: (value: unknown, record: IFormData) => `${record.kanGrubu || ''} ${record.kanGrubuRh || ''}` === value
 
         },
         {
@@ -68,7 +68,7 @@ const FormResults: React.FC = () => {
                 { text: 'Zehirlenmeler', value: 'Zehirlenmeler' },
 
             ],
-            // onFilter: (value: string, record: IFormData) => record.gelisNedeni === value
+            onFilter: (value: unknown, record: IFormData) => record.gelisNedeni === value
         },
 
         { title: 'Geliş Nedeni Açıklama', dataIndex: 'gelisNedeniAciklama', key: 'gelisNedeniAciklama' },
@@ -83,7 +83,7 @@ const FormResults: React.FC = () => {
                 { text: 'Refakatçi', value: 'Refakatçi' },
                 { text: 'Güvenlik Görevlisi', value: 'Güvenlik Görevlisi' },
             ],
-            // onFilter: (value: string[], record: IFormData) => record.odadaBulunanlar === value
+            onFilter: (value: unknown, record: IFormData) => record.odadaBulunanlar === value
         },
         {
             title: 'Darp Durumu',
@@ -93,7 +93,7 @@ const FormResults: React.FC = () => {
                 { text: 'Evet', value: 'Evet' },
                 { text: 'Hayır', value: 'Hayır' },
             ],
-            // onFilter: (value: string, record: IFormData) => record.darpDurumu === value
+            onFilter: (value: unknown, record: IFormData) => record.darpDurumu === value
         },
         { title: 'Organizasyon', dataIndex: 'organizasyon'},
         { title: 'Şikayet', dataIndex: 'sikayet'},
@@ -106,7 +106,7 @@ const FormResults: React.FC = () => {
                 { text: 'Evet', value: true },
                 { text: 'Hayır', value: false }
             ],
-            // onFilter: (value: string | boolean, record: IFormData) => `${record.uygunOrtamSaglandi}` === value,
+            onFilter: (value: unknown, record: IFormData) => `${record.uygunOrtamSaglandi}` === value,
         },
         {
             title: '',
