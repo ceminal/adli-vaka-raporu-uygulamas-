@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table } from 'antd';
+import type { TableColumnsType } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../layouts/Header/Header'
 import { deleteRow, clearTable } from '../../redux/slices/tableDataSlice';
@@ -9,12 +10,29 @@ import Footer from '../../layouts/Footer/Footer';
 import { IFormData } from '../../interfaces/formData';
 import { RootState } from '../../redux/store';
 
+interface DataType {
+    id: string;
+    ad: string;
+    soyad: string;
+    yas: number;
+    cinsiyet: string;
+    kanGrubu: string;
+    kanGrubuRh: string;
+    gelisNedeni: string;
+    gelisNedeniAciklama: string;
+    odadaBulunanlar: string[];
+    darpDurumu: boolean;
+    organizasyon: string;
+    sikayet: string;
+    doktorAdi: string;
+    uygunOrtamSaglandi: boolean;
+  }
+
 
 const FormResults: React.FC = () => {
     const tableData = useSelector((state: RootState) => state.table.tableData)
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    console.log(tableData);
 
 
     const handleClick = () => {
@@ -32,10 +50,10 @@ const FormResults: React.FC = () => {
         { text: '0-', value: '0 -' }
     ];
 
-    const tableColumns  = [
+    const tableColumns: TableColumnsType<DataType> = [
         { title: 'Ad', dataIndex: 'ad' },
-        { title: 'Soyad', dataIndex: 'soyad'},
-        { title: 'Yaş', dataIndex: 'yas'},
+        { title: 'Soyad', dataIndex: 'soyad' },
+        { title: 'Yaş', dataIndex: 'yas' },
         {
             title: 'Cinsiyet',
             dataIndex: 'cinsiyet',
@@ -53,7 +71,6 @@ const FormResults: React.FC = () => {
             render: (_text: string, record: IFormData) => `${record.kanGrubu || ''} ${record.kanGrubuRh || ''}`,
             filters: bloodTypeFilters,
             onFilter: (value: unknown, record: IFormData) => `${record.kanGrubu || ''} ${record.kanGrubuRh || ''}` === value
-
         },
         {
             title: 'Geliş Nedeni',
@@ -83,20 +100,21 @@ const FormResults: React.FC = () => {
                 { text: 'Refakatçi', value: 'Refakatçi' },
                 { text: 'Güvenlik Görevlisi', value: 'Güvenlik Görevlisi' },
             ],
-            onFilter: (value: unknown, record: IFormData) => record.odadaBulunanlar === value
+            onFilter: (value: unknown, record: IFormData) => record.odadaBulunanlar == value,
         },
         {
             title: 'Darp Durumu',
             dataIndex: 'darpDurumu',
-            render: (text: string) => (text ? 'Evet' : 'Hayır'),
+            key: 'darpDurumu',
             filters: [
                 { text: 'Evet', value: 'Evet' },
                 { text: 'Hayır', value: 'Hayır' },
             ],
-            onFilter: (value: unknown, record: IFormData) => record.darpDurumu === value
+            onFilter: (value: unknown, record:IFormData) => record.darpDurumu === value
         },
-        { title: 'Organizasyon', dataIndex: 'organizasyon'},
-        { title: 'Şikayet', dataIndex: 'sikayet'},
+        
+        { title: 'Organizasyon', dataIndex: 'organizasyon' },
+        { title: 'Şikayet', dataIndex: 'sikayet' },
         { title: 'Doktor Adı', dataIndex: 'doktorAdi' },
         {
             title: 'Uygun Ortam Sağlandı',
@@ -106,7 +124,7 @@ const FormResults: React.FC = () => {
                 { text: 'Evet', value: true },
                 { text: 'Hayır', value: false }
             ],
-            onFilter: (value: unknown, record: IFormData) => `${record.uygunOrtamSaglandi}` === value,
+            onFilter: (value: unknown, record: IFormData) => record.uygunOrtamSaglandi === value,
         },
         {
             title: '',

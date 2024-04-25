@@ -122,7 +122,7 @@ const FormInputs: React.FC = () => {
                         gelisNedeni: '',
                         gelisNedeniAciklama: '',
                         odadaBulunanlar: [],
-                        darpDurumu: '',
+                        darpDurumu: false,
                         organizasyon: '',
                         sikayet: '',
                         doktorAdi: '',
