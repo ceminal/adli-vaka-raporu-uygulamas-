@@ -8,7 +8,7 @@ export interface IFormData {
     gelisNedeni: string;
     gelisNedeniAciklama: string;
     odadaBulunanlar: string[];
-    darpDurumu: boolean;
+    darpDurumu: string;
     organizasyon: string;
     sikayet: string;
     doktorAdi: string;

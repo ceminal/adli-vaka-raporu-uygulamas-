@@ -12,20 +12,24 @@ const PieChart: React.FC<{ data: PieChartData[] }> = ({ data }) => {
       id: "pie-chart"
     },
     labels: data.map(item => item.organizasyon),
-    title: {
-      text: 'Organizasyon Adına Göre Adli Rapor Sayısı',
-      align: 'center'
-    },
-    legend: {
-      position: 'bottom'
-    }
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }]
   };
 
   const chartSeries = data.map(item => item.count);
 
   return (
     <div>
-      <h2>Pie Chart</h2>
+      <h4>Organizasyon - Rapor Sayısı Pie Chart</h4>
       <Chart
         options={chartOptions}
         series={chartSeries}
