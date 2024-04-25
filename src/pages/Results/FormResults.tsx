@@ -33,7 +33,7 @@ const FormResults: React.FC = () => {
     const tableData = useSelector((state: RootState) => state.table.tableData)
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    console.log(tableData);
 
     const handleClick = () => {
         navigate('/form-inputs');
