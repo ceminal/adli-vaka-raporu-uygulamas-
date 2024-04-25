@@ -8,6 +8,7 @@ To run this project,
 npm install
 npm run dev
 ```
+### ScreenShots From The Project
 
 ![appss1](https://github.com/ceminal/adli-vaka-raporu-uygulamasi/assets/74105512/cdd8052c-9cb2-4d5c-b434-5dd9bb4edab1)
 ![appformscreen2](https://github.com/ceminal/adli-vaka-raporu-uygulamasi/assets/74105512/2e6e7817-aa6a-490a-af6c-0f31af856072)
