@@ -9,7 +9,8 @@ interface PieChartData {
 const PieChart: React.FC<{ data: PieChartData[] }> = ({ data }) => {
   const chartOptions = {
     chart: {
-      id: "pie-chart"
+      id: "pie-chart",
+      width: 400
     },
     labels: data.map(item => item.organizasyon),
     responsive: [{

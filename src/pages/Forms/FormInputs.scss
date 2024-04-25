@@ -9,6 +9,10 @@
   .ant-space {
     width: 100%;
 
+    .ant-input {
+      margin-bottom: 10px;
+    }
+
     .ant-select {
       width: 100%;
     }
@@ -37,5 +41,14 @@
   }
   .gutter-row > div {
     margin-top: 20px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .ant-select {
+    margin-bottom: 12px;
+  }
+  .gutter-row > div {
+    margin-top: 0;
   }
 }
