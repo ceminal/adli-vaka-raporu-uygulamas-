@@ -6,11 +6,15 @@ import { deleteRow, clearTable } from '../../redux/slices/tableDataSlice';
 import './FormResults.scss';
 import PieChart from './PieChart';
 import Footer from '../../layouts/Footer/Footer';
+import { IFormData } from '../../interfaces/formData';
+import { RootState } from '../../redux/store';
 
 const FormResults: React.FC = () => {
     const tableData = useSelector((state: RootState) => state.table.tableData)
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    console.log(tableData);
+
 
     const handleClick = () => {
         navigate('/form-inputs');
@@ -27,36 +31,33 @@ const FormResults: React.FC = () => {
         { text: '0-', value: '0 -' }
     ];
 
-    const columns = [
-        { title: 'Ad', dataIndex: 'ad', key: 'ad', fixed: 'left' },
-        { title: 'Soyad', dataIndex: 'soyad', key: 'soyad', fixed: 'left' },
-        { title: 'Yaş', dataIndex: 'yas', key: 'yas', fixed: 'left' },
+    const tableColumns = [
+        { title: 'Ad', dataIndex: 'ad', key: 'ad' },
+        { title: 'Soyad', dataIndex: 'soyad', key: 'soyad' },
+        { title: 'Yaş', dataIndex: 'yas', key: 'yas' },
         {
             title: 'Cinsiyet',
             dataIndex: 'cinsiyet',
             key: 'cinsiyet',
-            fixed: 'left',
             filters: [
                 { text: 'Erkek', value: 'Erkek' },
                 { text: 'Kadın', value: 'Kadın' }
             ],
-            onFilter: (value, record) => record.cinsiyet === value
+            onFilter: (value: string, record: IFormData) => record.cinsiyet === value
         },
         {
             title: 'Kan Grubu',
             dataIndex: 'kanGrubu',
             key: 'kanGrubu',
-            fixed: 'left',
-            render: (text, record) => `${record.kanGrubu} ${record.kanGrubuRh}`,
+            render: (_text: string, record: IFormData) => `${record.kanGrubu || ''} ${record.kanGrubuRh || ''}`,
             filters: bloodTypeFilters,
-            onFilter: (value, record) => `${record.kanGrubu} ${record.kanGrubuRh}` === value
+            onFilter: (value: string, record: IFormData) => `${record.kanGrubu || ''} ${record.kanGrubuRh || ''}` === value
 
         },
         {
             title: 'Geliş Nedeni',
             dataIndex: 'gelisNedeni',
             key: 'gelisNedeni',
-            fixed: 'left',
             filters: [
                 { text: 'Etkili Eylem', value: 'Etkili Eylem' },
                 { text: 'Trafik Kazası', value: 'Trafik Kazası' },
@@ -67,16 +68,15 @@ const FormResults: React.FC = () => {
                 { text: 'Zehirlenmeler', value: 'Zehirlenmeler' },
 
             ],
-            onFilter: (value, record) => record.gelisNedeni === value
+            onFilter: (value: string, record: IFormData) => record.gelisNedeni === value
         },
 
-        { title: 'Geliş Nedeni Açıklama', dataIndex: 'gelisNedeniAciklama', key: 'gelisNedeniAciklama', fixed: 'left' },
+        { title: 'Geliş Nedeni Açıklama', dataIndex: 'gelisNedeniAciklama', key: 'gelisNedeniAciklama' },
         {
             title: 'Odada Bulunanlar',
             dataIndex: 'odadaBulunanlar',
             key: 'odadaBulunanlar',
-            fixed: 'left',
-            render: text => (text.join(', ')),
+            render: (text: string[]) => (text.join(', ')),
             filters: [
                 { text: 'Tabip', value: 'Tabip' },
                 { text: 'Sağlık Personeli', value: 'Sağlık Personeli' },
@@ -84,38 +84,36 @@ const FormResults: React.FC = () => {
                 { text: 'Refakatçi', value: 'Refakatçi' },
                 { text: 'Güvenlik Görevlisi', value: 'Güvenlik Görevlisi' },
             ],
-            onFilter: (value, record) => record.odadaBulunanlar === value
+            onFilter: (value: string[], record: IFormData) => record.odadaBulunanlar === value
         },
         {
             title: 'Darp Durumu',
             dataIndex: 'darpDurumu',
             key: 'darpDurumu',
-            fixed: 'left',
-            render: (text) => (text ? 'Evet' : 'Hayır'),
+            render: (text: string) => (text ? 'Evet' : 'Hayır'),
             filters: [
                 { text: 'Evet', value: 'Evet' },
                 { text: 'Hayır', value: 'Hayır' },
             ],
-            onFilter: (value, record) => record.darpDurumu === value
+            onFilter: (value: string, record: IFormData) => record.darpDurumu === value
         },
-        { title: 'Organizasyon', dataIndex: 'organizasyon', key: 'organizasyon', fixed: 'left' },
-        { title: 'Şikayet', dataIndex: 'sikayet', key: 'sikayet', fixed: 'left' },
-        { title: 'Doktor Adı', dataIndex: 'doktorAdi', key: 'doktorAdi', fixed: 'left' },
+        { title: 'Organizasyon', dataIndex: 'organizasyon', key: 'organizasyon' },
+        { title: 'Şikayet', dataIndex: 'sikayet', key: 'sikayet' },
+        { title: 'Doktor Adı', dataIndex: 'doktorAdi', key: 'doktorAdi' },
         {
             title: 'Uygun Ortam Sağlandı',
             dataIndex: 'uygunOrtamSaglandi',
             key: 'uygunOrtamSaglandi',
-            fixed: 'left',
-            render: (text) => (text ? 'Evet' : 'Hayır'),
+            render: (text: boolean) => (text ? 'Evet' : 'Hayır'),
             filters: [
                 { text: 'Evet', value: true },
                 { text: 'Hayır', value: false }
             ],
-            onFilter: (value, record) => record.uygunOrtamSaglandi === value,
+            onFilter: (value: boolean, record: IFormData) => record.uygunOrtamSaglandi === value,
         },
         {
-            title: '', key: 'action', fixed: 'left',
-            render: (_, record) => (
+            title: '', key: 'action',
+            render: (record: IFormData) => (
                 <Button type="primary" danger onClick={() => handleDeleteRow(record.id)}>
                     Sil
                 </Button>
@@ -123,21 +121,25 @@ const FormResults: React.FC = () => {
         }
     ];
 
-    const handleDeleteRow = (id) => {
+    const handleDeleteRow = (id: string) => {
         dispatch(deleteRow(id));
     };
 
     const handleDeleteAll = () => {
         dispatch(clearTable());
     }
-    const organizationData = tableData.reduce((acc, { organizasyon }) => {
+
+    const organizationData = tableData.reduce((acc: Record<string, number>, { organizasyon }: { organizasyon: string }) => {
         acc[organizasyon] = (acc[organizasyon] || 0) + 1;
         return acc;
     }, {});
+
     const chartData = Object.entries(organizationData).map(([key, value]) => ({
         organizasyon: key,
-        count: value
+        count: Number(value)
     }));
+
+
 
     return (
         <>
@@ -146,7 +148,7 @@ const FormResults: React.FC = () => {
                 <div className='formResultsTable'>
                     <h4 className='tableTitle' >Form Sonuçları</h4>
                     <Table
-                        columns={columns}
+                        columns={tableColumns}
                         dataSource={tableData}
                         pagination={{ pageSize: 5 }}
                         scroll={{ x: 'max-content' }}

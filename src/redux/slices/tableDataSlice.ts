@@ -14,10 +14,10 @@ const tableSlice = createSlice({
     name: 'tableData',
     initialState,
     reducers: {
-        setTableData: (state, action: PayloadAction<TableData[]>) => {
+        setTableData: (state, action: PayloadAction<IFormData[]>) => {
             state.tableData = action.payload;
         },
-        deleteRow: (state, action) => {
+        deleteRow: (state, action: PayloadAction<string>) => {
             state.tableData = state.tableData.filter(item => item.id !== action.payload);
         },
         clearTable: (state) => {
@@ -26,7 +26,6 @@ const tableSlice = createSlice({
     }
 });
 
-export const { setTableData } = tableSlice.actions;
-export const selectTableData = (state: RootState) => state.tableData;
-export const { deleteRow, clearTable  } = tableSlice.actions;
+export const { setTableData, deleteRow, clearTable } = tableSlice.actions;
+export const selectTableData = (state: RootState) => state.table.tableData;
 export default tableSlice.reducer;

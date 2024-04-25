@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { IFormData } from '../../interfaces/formData';
 import Header from '../../layouts/Header/Header'
 import Footer from '../../layouts/Footer/Footer';
+import { RootState } from '../../redux/store';
 
 const { Option } = Select;
 const bloodGroupOptions = [
@@ -84,7 +85,6 @@ const validationSchema = Yup.object({
     odadaBulunanlar: Yup.array().min(1, 'En az bir seçenek seçilmelidir'),
     doktorAdi: Yup.string().required('Doktor Adı zorunludur'),
     organizasyon: Yup.string().required('Organizasyon zorunludur'),
-    uygunOrtamSaglandi: Yup.boolean().oneOf([true], 'Uygun Ortam Sağlandı zorunludur').required(),
     darpDurumu: Yup.string().required('Darp durumu seçiniz.'),
 });
 
@@ -96,7 +96,7 @@ const FormInputs: React.FC = () => {
     const navigate = useNavigate();
 
     const ContinueButton = () => {
-        const { values } = useFormikContext();
+        const { values } = useFormikContext<FormikValues>();
         const isDisabled = !values.darpDurumu;
 
         return (
@@ -112,6 +112,7 @@ const FormInputs: React.FC = () => {
             <div className="formContainer">
                 <Formik
                     initialValues={{
+                        id: '',
                         ad: '',
                         soyad: '',
                         yas: 0,
